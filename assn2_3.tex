@@ -1,0 +1,165 @@
+
+
+\documentclass[12pt]{article}
+
+
+\usepackage{scicite}
+
+
+
+\usepackage{times}
+
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+
+
+\renewcommand\refname{References and Notes}
+
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+
+
+\title{{\it Assignment 2\/} } 
+
+
+
+
+\author
+{Satyanand\\
+\normalize{\textbf{14EC10049}}
+}
+
+
+\date{}
+
+
+
+
+
+
+\begin{document} 
+
+% Double-space the manuscript.
+
+\baselineskip24pt
+
+% Make the title.
+
+\maketitle 
+
+
+
+
+
+
+
+
+
+
+\section*{Problem 1}
+
+This problem is popularly known as the defective chessboard problem.A defective chessboard is a \begin{math}2^n * 2^n
+\end{math}
+board of squares with exactly one defective square.
+
+\begin{itemize}
+    \item When n=0, there is only one possible defective chessboard.
+    \item When n = 1, there are 4 possible defective chessboard.
+\end{itemize}
+
+\\Now, a defective chessboard with n = 0 can be easily covered as it has no non-defective squares. Here, the number of tiles are zero.
+
+\newline For n = 1, there are exactly three non-defective squares(unshaded in the above picture) and they can easily be covered with the L- shaped tile in one of the orientations.
+
+\subsection*{Algorithm}
+
+\begin{itemize}
+    \item We can use divide and conquer methodology to solve this problem. The method suggests reducing the \begin{math}2^n * 2^n
+    \end{math}  board into smaller defective chessboards and then tiling them. A natural way of thinking is to divide the \begin{math}2^n * 2^n
+    \end{math} 
+    board into four 
+    \begin{math}2^(n-1) * 2^(n-1)
+    \end{math} 
+    boards.
+    \item Note that only one of the four sub-squares are defective. So, we place the L  - shaped tile in such a way that all the remaining three sub-squares are also defective.
+    \item This partitioning technique converts the original problem into 4 sub- problems which can be solved recursively. The recursion terminates when the board has been reduced to 1X1(which has no non-defective square, hence no tiles need to be placed).
+
+\end{itemize}
+
+
+
+
+	
+	
+
+
+
+\section*{Problem 2}
+
+The Brute force solution is O(\begin{math}n^2
+\end{math}), compute the distance between each pair and return the smallest. We can calculate the smallest distance in O(\begin{math}nLogn
+\end{math}) time using Divide and Conquer strategy. A O(\begin{math}n x (Logn)^2\end{math}) approach is implemented using divide and conquer method.
+
+\subsection*{Algorithm}
+
+Following are the detailed steps of a O(\begin{math}n (Logn)^2\end{math}) algortihm.
+Input: An array of n points P[]
+Output: The smallest distance between two points in the given array.
+
+As a pre-processing step, input array is sorted according to x coordinates.
+
+\begin{enumerate}
+    \item Find the middle point in the sorted array, we can take P[n/2] as middle point.
+    \item Divide the given array in two halves. The first subarray contains points from P[0] to P[n/2]. The second subarray contains points from P[n/2+1] to P[n-1].
+    \item  Recursively find the smallest distances in both subarrays. Let the distances be dl and dr. Find the minimum of \textit{dl} and \textit{dr}. Let the minimum be \textit{d}.
+    \item  From above 3 steps, we have an upper bound \textit{d} of minimum distance. Now we need to consider the pairs such that one point in pair is from left half and other is from right half. Consider the vertical line passing through passing through P[n/2] and find all points whose x coordinate is closer than d to the middle vertical line. Build an array strip[] of all such points.
+    \item Sort the array \textit{strip}[] according to y coordinates. This step is O(\begin{math}nLogn\end{math}). It can be optimized to O(n) by recursively sorting and merging.
+    \item Find the smallest distance in \textit{strip}[]. This is tricky. From first look, it seems to be a O(\begin{math}n^2\end{math}) step, but it is actually O(n). It can be proved geometrically that for every point in \textit{strip}, we only need to check at most 7 points after it (note that strip is sorted according to Y coordinate).
+    \item Finally return the minimum of d and distance calculated in above step (step 6)
+\end{enumerate}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
