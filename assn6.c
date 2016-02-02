@@ -50,8 +50,9 @@ double min(double a,double b)
 
 int intersect(Pair a,Pair b,Pair c,Pair d)
 {
-	if(!(a.y<c.y && b.y>d.y) || (a.y>c.y && b.y<d.y))//if intersects
-		return 0;
+	
+	if((a.y<c.y && b.y>d.y) || (a.y>c.y && b.y<d.y))//if not intersects
+		return 1;
 	
 	
 	double m1,m2,off1,off2;
@@ -60,8 +61,8 @@ int intersect(Pair a,Pair b,Pair c,Pair d)
 	m2=(d.y-c.y)/(d.x-c.x);
 	off1=a.y/(m1*a.x);
 	off2 = c.y/(m2*c.x);
-	ret.x = (off1-off2)/(m2-m1);
-	ret.y = m1*ret.x + off1;
+	ret.x= (c.y-a.y -m2*c.x+m1*a.x)/(m1-m2);
+	ret.y = m1*(ret.x-a.x) + a.y;
 	if(ret.x>max(a.x,c.x) && ret.x<min(b.x,d.x))
 		return 1;
 	else return 0;
@@ -79,17 +80,24 @@ Pair predict(Pair a,Pair b,long long X)
 	return ret;
 
 }
-
+Pair ret;
 Pair intersection(Pair a,Pair b,Pair c,Pair d)
 {
+	if(a.x==b.x)
+		return predict(c,d,a.x);
+	else if(c.x==d.x)
+		return predict(a,b,c.x);
+	printf(">>>%f %f %f %f %f %f %f %f \n" ,a.x,a.y,b.x,b.y,c.x,c.y,d.x,d.y);
 	double m1,m2,off1,off2;
-	Pair ret;
+	
 	m1=(b.y-a.y)/(b.x-a.x);
 	m2=(d.y-c.y)/(d.x-c.x);
 	off1=a.y/(m1*a.x);
 	off2 = c.y/(m2*c.x);
-	ret.x = (off1-off2)/(m2-m1);
-	ret.y = m1*ret.x + off1;
+	//ret.x = (off1-off2)/(m2-m1);
+	ret.x= (c.y-a.y -m2*c.x+m1*a.x)/(m1-m2);
+	ret.y = m1*(ret.x-a.x) + a.y;
+	printf("%f %f %f %f \n",ret.x,ret.y,m1,m2);
 	return ret;
 
 }
@@ -197,13 +205,13 @@ Pair* mergeSkyline(Pair* leftSky,Pair* rightSky,long long len1,long long len2,lo
 			if(intersect(prev1,leftSky[idx1],prev2,rightSky[idx2]))
 			{
 				ret = intersection(prev1,leftSky[idx1],prev2,rightSky[idx2]);
-				//printf("++++++++++++Debug %f %f %lld %lld \n",ret.x,ret.y,idx1,idx2);
+				printf("++++++++++++Debug %f %f %lld %lld \n",ret.x,ret.y,idx1,idx2);
 				//printf("%f %f %f %f %f %f %f %f \n\n",prev1.x,prev1.y,leftSky[idx1].x,leftSky[idx1].y,prev2.x,prev2.y,rightSky[idx2].x,rightSky[idx2].y);
 			}
 			else
 			{
 				ret = higher(leftSky[idx1],rightSky[idx2]);
-				//printf("++++++++++++Debug %f %f \n",ret.x,ret.y);
+				printf("++++++++++++Debug %f %f \n",ret.x,ret.y);
 			}
 			prev1.x=leftSky[idx1].x;
 			prev1.y=leftSky[idx1].y;
@@ -219,14 +227,17 @@ Pair* mergeSkyline(Pair* leftSky,Pair* rightSky,long long len1,long long len2,lo
 		{
 			if(intersect(prev1,leftSky[idx1],prev2,rightSky[idx2]))
 			{
+				printf("%%%%%%%%%%%%%% \n");
 				ret = intersection(prev1,leftSky[idx1],prev2,rightSky[idx2]);
+				printf("---++++++++++++Debug %f %f %lld %lld \n",ret.x,ret.y,idx1,idx2);
 			}
 			else
 			{
 				ret = higher(leftSky[idx1],rightSky[idx2]);
+				printf("++++++++++++Debug %f %f \n",ret.x,ret.y);
 			}
-			prev2.x=leftSky[idx2].x;
-			prev2.y=leftSky[idx2].y;
+			prev2.x=rightSky[idx2].x;
+			prev2.y=rightSky[idx2].y;
 			idx2++;
 			/*Max = max(prev1,rightSky[idx2].y);
 			X = rightSky[idx2].x;
@@ -242,9 +253,9 @@ Pair* mergeSkyline(Pair* leftSky,Pair* rightSky,long long len1,long long len2,lo
 			prev1.x=leftSky[idx1].x;
 			prev1.y=leftSky[idx1].y;
 			idx1++;
-			prev2.x=leftSky[idx2].x;
+			/*prev2.x=leftSky[idx2].x;
 			prev2.y=leftSky[idx2].y;
-			idx2++;
+			idx2++;*/
 			/*Max = max(leftSky[idx1].y,rightSky[idx2].y);
 			X = rightSky[idx2].x;
 			prev1 = leftSky[idx1].y;
@@ -495,9 +506,9 @@ int main()
 	
 	qsort(A,N,sizeof(Bldg),compare);
 	//printf("\n \n \n");
-	/*for(i=0;i<N;i++)
+	for(i=0;i<N;i++)
 		printf("%f %f %f %f \n",A[i].start,A[i].end,A[i].hs,A[i].he);
-	printf("\n \n \n");*/
+	printf("\n \n \n");
 	
 	//create skyline
 	retSky=Skyline(A,0,N-1,&N);
