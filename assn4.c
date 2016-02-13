@@ -264,3 +264,205 @@ int main()
 }
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+struct node
+{
+    int data;
+    struct node *right,*left;
+};
+
+typedef struct node Node;
+
+int p =1;
+//int level=1;
+void createTree(Node* root,int N,int level)
+{
+	//printf("Here  %d \n",p);
+	if(N>0)
+	{
+		root->data = p++;
+		//printf("data = %d \n",root->data);
+		root->left = NULL;
+		root->right = NULL;
+	}
+	else
+		return;
+	if(N==1)
+		return;
+
+	float div = 0.4 + (rand()%20)/100.0;
+	div= 0.5;
+	//printf("div = %f \n",div);
+	Node* leftNode = (Node*)malloc(sizeof(Node));
+	Node* rightNode = (Node*)malloc(sizeof(Node));
+
+	leftNode->data = 777;
+	rightNode->data = 777;
+
+	leftNode->right=NULL;
+	leftNode->left=NULL;
+	rightNode->left=NULL;
+	rightNode->right=NULL;
+
+	root->left = leftNode;
+	root->right = rightNode;
+
+	int LN=ceil((N-1)*div>=1);
+	int RN=floor((N-1)*(1.0-div)>=1);
+
+	if(LN>0)
+	{
+		printf("creating left  %d(%d) \n",LN,level);
+		createTree(root->left,LN,level+1);
+	}
+	else
+		root->left = NULL;
+	
+	if(RN>0)
+	{
+		printf("creating right %d(%d) \n",RN,level);
+		createTree(root->right,RN,level+1);
+	}
+	else
+		root->right = NULL;
+
+	return;
+}
+
+void printTree(Node* root,int level)
+{
+	//printf("p =  %d \n",p++);
+	if(root==NULL)
+		return;
+	printf("-%d(%d) ",root->data,level);
+	//printf("-%d %d %d \n",root->data,root->left->data,root->right->data);
+	printTree(root->left,level+1);
+	printTree(root->right,level+1);
+	
+
+	return;
+	
+
+}
+
+int main()
+{
+	Node *treeRoot = (Node*)malloc(sizeof(Node));;
+
+	printf("createTree \n");
+	createTree(treeRoot,33,2);
+	p=1;
+	printf("printfTree \n");
+	printTree(treeRoot,1);
+
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////
+
+////////////
+
+Doublet maxPath(Node *root)
+{
+	Doublet mineMax,leftTreeMax,rightTreeMax;
+
+	/*if(root!=NULL)
+		printf("Hodor1 %d \n",root->data);
+	else
+		printf("Hodor1 \n");*/	
+
+
+	if(root==NULL)
+	{
+		//printf("Hodor2.0 \n");
+		mineMax.sum=INT_MIN;
+		mineMax.top=NULL;
+		mineMax.bottom=NULL;
+
+		return mineMax;
+		//printf("Hodor2 \n");
+
+	}
+
+	leftTreeMax=maxPath(root->left);
+	rightTreeMax=maxPath(root->right);
+
+	if(leftTreeMax.sum>rightTreeMax.sum)
+	{
+
+		if(leftTreeMax.sum + root->data <= root->data)
+		{
+			mineMax.sum=root->data;
+			mineMax.top=root;
+			mineMax.bottom=root;
+			storagE(mineMax);
+			//return mineMax;//
+		}
+		else
+		{
+			mineMax.sum = leftTreeMax.sum + root->data;
+			mineMax.top=root;
+			mineMax.bottom=leftTreeMax.bottom;
+			storagE(mineMax);
+			//return mineMax;//
+
+		}
+	}
+	else
+	{
+		if(rightTreeMax.sum + root->data <= root->data)
+		{
+			mineMax.sum=root->data;
+			mineMax.top=root;
+			mineMax.bottom=root;
+			storagE(mineMax);
+
+		}
+		else
+		{
+			mineMax.sum= rightTreeMax.sum + root->data;
+			mineMax.top=root;
+			mineMax.bottom=rightTreeMax.bottom;
+			storagE(mineMax);
+
+		}
+	}
+
+	storaGE(leftTreeMax.sum+root->data+rightTreeMax.sum,root,leftTreeMax.bottom,rightTreeMax.bottom);
+	return mineMax;
+
+}

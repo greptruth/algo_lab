@@ -1,0 +1,190 @@
+
+
+\documentclass[12pt]{article}
+
+
+%\usepackage{scicite}
+
+
+
+\usepackage{times}
+
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+
+
+\renewcommand\refname{References and Notes}
+
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+
+
+\title{{\it Assignment 2\/} } 
+
+
+
+
+\author
+{Satyanand\\
+14EC10049
+}
+
+
+\date{}
+
+
+
+
+
+
+\begin{document} 
+\maketitle
+% Double-space the manuscript.
+
+%\baselineskip24pt
+
+% Make the title.
+
+ 
+
+\section*{Traversals}
+\subsection*{Inorder Traversal}
+
+
+
+
+\subsection*{Algorithm}
+\begin{itemize}
+
+   \item Traverse the left subtree, i.e., call Inorder(left-subtree)
+    \item Visit the root.
+  \item  Traverse the right subtree, i.e., call Inorder(right-subtree)
+
+\end{itemize}
+\subsection*{Preorder Traversal}
+
+
+
+
+\subsection*{Algorithm}
+\begin{itemize}
+\item Visit the root.
+   \item Traverse the left subtree, i.e., call Inorder(left-subtree)
+  \item  Traverse the right subtree, i.e., call Inorder(right-subtree)
+
+\end{itemize}
+
+\subsection*{Postorder Traversal}
+
+
+
+
+\subsection*{Algorithm}
+\begin{itemize}
+
+   \item Traverse the left subtree, i.e., call Inorder(left-subtree)
+  \item  Traverse the right subtree, i.e., call Inorder(right-subtree)
+  \item Visit the root.
+
+\end{itemize}
+
+\subsection*{ Analysis of Traversals}
+
+Here one can notice that each node if visited only once. There is constant time overhead for visiting one node hence in concurs that all traversals have O(n) time complexity.
+
+\section*{Maximum sum path from root to a leaf}
+
+\subsection*{Algorithm}
+We can solve this problem recursively by passing the sum of all nodes from root to each node as parameter to the recurive calls to its child.If the node is a leaf then we check if this has the sum greater than such other nodes.If it is so then we update the maximum sum.To be able to output the path we just need the leaf node of the maximum sum path.With that we can go backward to the root hence obtaining the path.
+\begin{itemize}
+
+\item  Start by assigning $max\_sum =INT_MIN $
+\item Call the routine maxPath() for root of the tree with $current\_sum$=$0$
+\item recursively call it for its both child by adding this node's sum to $current\_sum$
+\item If the node is a leaf node compare this to $max\_sum$
+\item If it is greater than $max\_sum$ update the $max\_sum$ and update the leaf node
+
+\end{itemize}
+
+\subsection*{Analysis}
+
+Here the equation for recursive call is T(n) = T(left child) + T(right child) + O(1)
+But since each node is visited only once and there is constant time required for each node's operation the time complexity of finding target leaf is O(n).
+
+The path printing subroutine visits each node of the path once and requires constant operation for each node it also has time complexity of O(n).
+
+\section*{Maximum sum path between any two nodes}
+
+\subsection*{Algorithm}
+We can solve this question also recursively.
+First let us see for a node the ways the path goes through the node
+
+\begin{enumerate}
+\item  Node only
+\item Max path through Left Child + Node
+\item Max path through Right Child + Node
+\item Max path through Left Child + Node + Max path through Right Child
+
+\end{enumerate}
+
+To obtain the path back we just need three nodes
+
+\begin{enumerate}
+\item  the highest node in the path
+\item the lowest node in the left path from the highest node
+\item the lowest node in the right path from the highest node
+
+\end{enumerate}
+To regenerate the path we start from the left lowest node and reach top node going upwareds and the from right lowest reach top node but now printing in the top down manner recursively.
+
+\subsection*{Analysis}
+The complexity is the same as in previous problem.
+Here the equation for recursive call is T(n) = T(left child) + T(right child) + O(1)
+But since each node is visited only once and there is constant time required for each node's operation the time complexity of finding target leaf is O(n).
+
+The path printing subroutine visits each node of the path once and requires constant operation for each node it also has time complexity of O(n).
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

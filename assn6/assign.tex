@@ -1,0 +1,121 @@
+
+
+\documentclass[12pt]{article}
+
+
+%\usepackage{scicite}
+
+
+
+\usepackage{times}
+
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+
+
+\renewcommand\refname{References and Notes}
+
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+
+
+\title{{\it Assignment 6\/} } 
+
+
+
+
+\author
+{Satyanand\\
+14EC10049
+}
+
+
+\date{}
+
+
+
+
+
+
+\begin{document} 
+\maketitle
+% Double-space the manuscript.
+
+%\baselineskip24pt
+
+% Make the title.
+
+ 
+
+\subsection*{CREATE TREE}
+\begin{enumerate}
+	\item If the range passed has length 0 or less than the length of interval return null(O(1))
+	\item Find mideian range from the range passed(O(1))
+	\item Create node for that range(O(1))
+	\item Call CREATE TREE for the remaining range less than the current range(O(1))
+	\item Call CREATE TREE fro the remaining range graeter than the used range(O(1))
+\end{enumerate}
+\subsection*{Analysis & Time Complexity}
+Here we see the total time for creation of a node is O(1). Hence for all ranges it will be O(n) where n is the number of intervals in which the range is divided.
+
+
+\subsection*{MERGE}
+\begin{enumerate}
+	\item If the current node overlaps or lies within the range to merge,then add this to the SubTree.(O(1))
+	\item Add the node's elements to the list.(O(k) where k =number of elements in the list)
+	\item Add this node to the stack.(O(1))
+	\item Call MERGE for right subtree(O(1))
+	\item Call MERGE for left subtree(O(1))
+	\end{enumerate}
+\subsection*{Analysis & Time Complexity}
+Here we see the total time for merging is propotional to the number of elements added to the new merged node created. Hence for all ranges it will be O(K) where K is the number of elements to be added to the node created. But the number of elements added will be propotional to the 
+
+\subsection*{RECREATE TREE}
+\begin{enumerate}
+	\item Call MERGE for each new interval that will exist in the new tree.(O(K))
+\end{enumerate}
+\subsection*{Analysis & Time Complexity}
+Since the new tree will contain all the previous data,hence all the numbers will be traversed at least once.So the time complexity will be O(N) where N is the maximum number of elements possible in the list.But even if there are no elements in the list 
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
