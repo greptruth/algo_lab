@@ -1,0 +1,179 @@
+
+
+\documentclass[12pt]{article}
+
+
+%\usepackage{scicite}
+
+
+
+\usepackage{times}
+
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+
+
+\renewcommand\refname{References and Notes}
+
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+
+
+\title{{\it Assignment 9\/} } 
+
+
+
+
+\author
+{Satyanand\\
+14EC10049
+}
+
+
+\date{}
+
+
+
+
+
+
+\begin{document} 
+\maketitle
+% Double-space the manuscript.
+
+%\baselineskip24pt
+
+% Make the title.
+
+\subsection*{FIBONACCI HEAPS} 
+A red-black tree is a binary search tree in which
+\begin{enumerate}
+	\item each node has a color (red or black) associated with it (in addition to its key and left and right children)
+	\item the following 3 properties hold:
+	\item (root property) The root of the red-black tree is black
+	\item (red property) The children of a red node are black.
+	\item (black property) For each node with at least one null child, the number of black nodes on the path from the root to the null child is the same.
+\end{enumerate}
+\subsection*{Operations on a Red-Black Tree}
+
+As with the binary search tree, we will want to be able to perform the following operations on red-black trees:
+\begin{enumerate}
+	\item insert a key value (insert)
+	\item determine whether a key value is in the tree (lookup)
+	\item remove key value from the tree (delete)
+	\item print all of the key values in sorted order (print)
+\end{enumerate}
+% \subsection*{}
+% The insert operation
+
+% The goal of the insert operation is to insert key K into tree T, maintaining T's red-black tree properties. A special case is required for an empty tree. If T is empty, replace it with a single black node containing K. This ensures that the root property is satisfied.
+
+% If T is a non-empty tree, then we do the following:
+
+% use the BST insert algorithm to add K to the tree
+% color the node containing K red
+% restore red-black tree properties (if necessary)
+% \subsection*{}
+% What is the time complexity for insert?
+
+% Inserting a key into a non-empty tree has three steps. In the first step, the BST insert operation is performed. The BST insert operation is O(height of tree) which is O(log N) because a red-black tree is balanced. The second step is to color the new node red. This step is O(1) since it just requires setting the value of one node's color field. In the third step, we restore any violated red-black properties.
+
+% Restructuring is O(1) since it involves changing at most five pointers to tree nodes. Once a restructuring is done, the insert algorithm is done, so at most 1 restructuring is done in step 3. So, in the worst-case, the restructuring that is done during insert is O(1).
+
+% Changing the colors of nodes during recoloring is O(1). However, we might then need to handle a double-red situation further up the path from the added node to the root. In the worst-case, we end up fixing a double-red situation along the entire path from the added node to the root. So, in the worst-case, the recoloring that is done during insert is O(log N) ( = time for one recoloring * max number of recolorings done = O(1) * O(log N) ).
+
+% Thus, the third step (restoration of red-black properties) is O(log N) and the total time for insert is O(log N).
+
+
+Red-black tree operations are a modified version of BST operations, with the modifications aiming to preserve the properties of red-black trees while keeping the operations complexity a function of tree height.
+
+\subsection*{Red-black tree insertion:}
+
+
+Inserting a node in a red-black tree is a two step process:
+\begin{enumerate}
+	\item A BST insertion, which takes O(log n) as shown before.
+	\item Fixing any violations to red-black tree properties that may occur after applying step 1. This step is O(log n) also, as we start by fixing the newly inserted node, continuing up along the path to the root node and fixing nodes along that path. Fixing a node is done in constant time and involves re-coloring some nodes and doing rotations.
+\end{enumerate}
+Accordingly the total running time of the insertion process is O(log n). Figure 7 shows the red-black tree in figure 5 before and after insertion of a node with value 4. You can see how the swap operations modified the tree structure to keep it balanced.
+
+\subsection*{Red-black tree deletion:}
+
+The same concept behind red-black tree insertions applies here. Removing a node from a red-black tree makes use of the BST deletion procedure and then restores the red-black tree properties in O(log n). The total running time for the deletion process takes O(log n) time, then, which meets the complexity requirements for the primitive operations.
+
+\subsection*{Red-black tree retrieval:}
+Retrieving a node from a red-black tree doesn’t require more than the use of the BST procedure, which takes O(log n) time.
+
+
+% \subsection*{CREATE TREE}
+% \begin{enumerate}
+% 	\item If the range passed has length 0 or less than the length of interval return null(O(1))
+% 	\item Find mideian range from the range passed(O(1))
+% 	\item Create node for that range(O(1))
+% 	\item Call CREATE TREE for the remaining range less than the current range(O(1))
+% 	\item Call CREATE TREE fro the remaining range graeter than the used range(O(1))
+% \end{enumerate}
+% \subsection*{Analysis & Time Complexity}
+% Here we see the total time for creation of a node is O(1). Hence for all ranges it will be O(n) where n is the number of intervals in which the range is divided.
+
+
+% \subsection*{MERGE}
+% \begin{enumerate}
+% 	\item If the current node overlaps or lies within the range to merge,then add this to the SubTree.(O(1))
+% 	\item Add the node's elements to the list.(O(k) where k =number of elements in the list)
+% 	\item Add this node to the stack.(O(1))
+% 	\item Call MERGE for right subtree(O(1))
+% 	\item Call MERGE for left subtree(O(1))
+% 	\end{enumerate}
+% \subsection*{Analysis & Time Complexity}
+% Here we see the total time for merging is propotional to the number of elements added to the new merged node created. Hence for all ranges it will be O(K) where K is the number of elements to be added to the node created. But the number of elements added will be propotional to the 
+
+% \subsection*{RECREATE TREE}
+% \begin{enumerate}
+% 	\item Call MERGE for each new interval that will exist in the new tree.(O(K))
+% \end{enumerate}
+% \subsection*{Analysis & Time Complexity}
+% Since the new tree will contain all the previous data,hence all the numbers will be traversed at least once.So the time complexity will be O(N) where N is the maximum number of elements possible in the list.But even if there are no elements in the list 
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

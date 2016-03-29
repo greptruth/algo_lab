@@ -1,0 +1,51 @@
+Make-Heap( ):
+It just creates an empty heap
+->no trees and no nodes at all !!
+->amortized cost = O(1)
+
+Find-Min(H):
+The heap H always maintain a pointer
+min(H) which points at the node with
+minimum key
+-> actual cost = 1
+-> no change in t(H) and m(H)
+-> amortized cost = O(1)
+
+Insert(H,x,k):
+It adds a tree with a single node to H,
+storing the item x with key k
+Also, update min(H) if necessary
+-> t(H) increased by 1, m(H) unchanged
+-> amortized cost = 2 + 1 = O(1)
+
+
+Union(H1,H2):
+It puts the trees in H1 and H2
+together,
+forming a new heap H
+•does not merge any trees into one
+Set min(H) accordingly
+t(H) and m(H) unchanged
+amortized cost = 2 + 0 = O(1)
+
+Extract-Min is a hardworking operation
+It reduces the #trees by joining them together
+
+Two major steps:
+1. Remove node with minimum key its children form roots of new trees in H
+2. Consolidation: Repeatedly joining roots of two trees with same degree in the end, the roots of any two trees do not have same degree
+** During consolidation, if a marked node receives a parent we unmark the node
+
+More on Consolidation
+•The consolidation step will examine each tree in H one by one, in arbitrary order
+•To facilitate the step, we use an array of size MaxDeg(n)
+[ Recall: MaxDeg(n)=max deg of a node in final heap ]
+•At any time, we keep track of at most one tree of a particular degree
+If there are two, we join their roots
+
+Amortized Cost
+•Let H’denote the heap just before the Extract-Min operation 
+ actual cost: t(H’) + MaxDeg(n)
+potential before: t(H’) + 2m(H’)
+potential after: at most MaxDeg(n) + 1 + 2m(H’)[ since #trees MaxDeg(n) +1, and no new marked nodes ]
+amortized cost 2MaxDeg(n) + 1 = O(log n)
